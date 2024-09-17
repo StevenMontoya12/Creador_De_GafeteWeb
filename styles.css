@@ -1,0 +1,132 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0; /* Elimina el margen por defecto del body */
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Altura completa del viewport */
+    padding: 0 20px; /* Espacio en los bordes */
+    overflow: hidden; /* Elimina el desplazamiento en el body */
+}
+
+h1{
+
+    text-align: center;
+
+}
+
+/* Contenedor principal con padding y un máximo ancho */
+.container {
+    margin-top: 40px;
+    padding: 10px 20px;
+    width: 100%;
+    max-width: 900px; /* Ancho máximo del contenedor */
+    box-sizing: border-box; /* Incluye padding en el tamaño total */
+    overflow-y: auto; /* Permite el scroll vertical si es necesario */
+    background-color: white; /* Fondo blanco para el contenedor */
+    border-radius: 8px; /* Bordes redondeados */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    max-height: 100vh; /* Limita la altura del contenedor al tamaño del viewport */
+    position: relative; /* Permite el ajuste de elementos internos */
+}
+
+/* Estilo para el formulario */
+form {
+    display: flex;
+    flex-direction: column; /* Organiza los elementos en columnas */
+    gap: 15px; /* Espacio entre los elementos del formulario */
+}
+
+/* Estilo para las etiquetas del formulario */
+label {
+    display: block;
+    font-weight: bold; /* Hace que las etiquetas se destaquen */
+    margin-bottom: 5px;
+}
+
+/* Estilo para los campos de entrada y botones */
+input, button {
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #ccc; /* Borde gris claro para los inputs */
+    border-radius: 5px; /* Bordes redondeados para inputs y botones */
+    box-sizing: border-box; /* Incluye padding y border en el tamaño total */
+}
+
+/* Estilo para los botones */
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px; /* Tamaño de fuente para el botón */
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+/* Estilo para las tarjetas (badges) */
+.badge {
+    border: 2px solid #007bff;
+    border-radius: 10px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+/* Estilo para el header de las tarjetas */
+.badge-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+/* Estilo para la foto en las tarjetas */
+.badge-photo {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px solid #007bff;
+    object-fit: cover;
+    margin-right: 20px;
+}
+
+/* Estilo para el texto en las tarjetas */
+.badge-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.badge-text h2 {
+    margin: 0;
+}
+
+.badge-text p {
+    margin: 5px 0;
+}
+
+/* Estilo para el canvas */
+canvas {
+    display: block; /* Hace que el canvas sea un elemento de bloque */
+    margin: 20px auto; /* Centra el canvas horizontalmente y agrega margen superior e inferior */
+    width: 100%;
+    max-width: 591px; /* Ajusta el ancho máximo si es necesario */
+    height: auto; /* Mantiene la proporción del canvas */
+    border: 2px solid #007bff;
+}
+
+
+
+
+/* Contenedor del canvas */
+
+

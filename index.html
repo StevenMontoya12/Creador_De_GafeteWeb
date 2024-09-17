@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generar Gafete</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Formulario de Gafetes</h1>
+        <form id="badge-form">
+            <label for="photo">Foto:</label>
+            <input type="file" id="photo" name="photo" accept="image/*" required>
+            
+            <label for="name">Nombre:</label>
+            <input type="text" id="name" name="name" required>
+            
+            <label for="first_name">Apellido Paterno:</label>
+            <input type="text" id="first_name" name="first_name" required>
+
+            <label for="middle_name">Apellido Materno:</label>
+            <input type="text" id="middle_name" name="middle_name" required>
+
+            <label for="birthdate">Fecha de Nacimiento:</label>
+            <input type="text" id="birthdate" name="birthdate" required>
+
+            <label for="telephone">Telefono de Casa:</label>
+            <input type="text" id="telephone" name="telephone" required>
+
+            <label for="celphone">Celular:</label>
+            <input type="text" id="celphone" name="celphone" required>
+            
+            <label for="mail">Mail:</label>
+            <input type="text" id="mail" name="mail" required>
+
+            <label for="addres">Domilicio:</label>
+            <input type="text" id="addres" name="addres" required>
+
+            <label for="alergia">Alergias o Padecimientos:</label>
+            <input type="text" id="alergia" name="alergia" required>
+
+            <label for="e_contact">Contacto de Emergencia:</label>
+            <input type="text" id="e_contact" name="e_contact" required>
+
+            <label for="parents">Parentesco:</label>
+            <input type="text" id="parents" name="parents" required>
+            
+            <label for="e_contact_celphone">Telefono de Conctacto Emergencia:</label>
+            <input type="text" id="e_contact_celphone" name="e_contact_celphone" required>
+
+            <label for="job">Puesto (Menu):</label>
+            <input type="text" id="job" name="job" required>
+
+            <label for="departament">Departamento (Menu):</label>
+            <input type="text" id="departament" name="departament" required>
+
+            <label for="brigadista">Brigadista:</label>
+            <input type="text" id="brigadista" name="brigadista" required>
+            
+            <button type="submit">Generar Gafete</button>
+        </form>
+
+        <canvas id="badgeCanvas" width="591" height="1004"></canvas>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
