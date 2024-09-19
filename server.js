@@ -40,17 +40,19 @@ const storage = multer.memoryStorage(); // Usamos memoria en lugar de disco
 const upload = multer({ storage: storage });
 
 // Manejar el POST a /save-form
-app.post('/save-form', (req, res) => {
+app.post('/save-form', upload.single('photo'), (req, res) => {
     console.log('Form Data:', req.body);
-    // Asegúrate de que req.body tenga los datos esperados
+    console.log('File Data:', req.file);
 
     const formData = req.body;
+    const photoPath = req.file ? req.file.originalname : null; // Ajusta esto si usas almacenamiento en disco
 
     const sql = `INSERT INTO gafetes 
-    (name, first_name, middle_name, birthdate, telephone, celphone, email, address, alergia, e_contact, parents, e_contact_celphone, job, departament, brigadista)
+    (photo, name, first_name, middle_name, birthdate, telephone, celphone, email, address, alergia, e_contact, parents, e_contact_celphone, job, departament, brigadista)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
     const values = [
+        photoPath,
         formData.name,
         formData.first_name,
         formData.middle_name,
@@ -88,6 +90,38 @@ app.post('/save-form', (req, res) => {
         });
     });
 });
+
+
+
+// Ruta para obtener los datos del gafete y el código QR
+app.get('/get-badge/:id', (req, res) => {
+    const id = req.params.id;
+    const sql = 'SELECT * FROM gafetes WHERE id = ?';
+
+    connection.query(sql, [id], (err, results) => {
+        if (err) {
+            console.error('Error al consultar la base de datos:', err);
+            return res.status(500).send('Error al obtener los datos');
+        }
+        if (results.length === 0) {
+            return res.status(404).send('Gafete no encontrado');
+        }
+
+        const formData = results[0];
+        const qrData = JSON.stringify({ ...formData, id });
+
+        QRCode.toDataURL(qrData, (err, qrCode) => {
+            if (err) {
+                console.error('Error al generar el código QR:', err);
+                return res.status(500).send('Error al generar el código QR');
+            }
+
+            res.json({ ...formData, qrCode });
+        });
+    });
+});
+
+
 
 // Escuchar en el puerto
 app.listen(PORT, () => {
