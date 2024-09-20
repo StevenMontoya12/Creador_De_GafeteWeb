@@ -3,7 +3,7 @@
 <p>Utiliza NodeJs V20 </p>
 
 
-<p>"Node Server.Js" para ejecutar </p>
+<p>"Node Server.Js" para ejecutar en la consola</p>
 
 
 <p>Usa Mysql Para la base de datos en la cual la base de datos es una tabla que tiene los siguientes atributos: </p>
