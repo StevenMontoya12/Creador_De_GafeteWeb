@@ -7,7 +7,8 @@
 
 
 <p>Usa Mysql Para la base de datos en la cual la base de datos es una tabla que tiene los siguientes atributos: </p>
-<p>Nombre de la tabla> </p>
+<p>Nombre de la BD:<b>gafetes_db</b> </p>
+<p>Nombre de la tabla:<b>gafetes</b> </p>
 <ul>
 <li>name</li>
 <li>first_name</li>
@@ -21,9 +22,7 @@
 <li>e_contact</li>
 <li>parents</li>
 <li>e_contact_celphone</li>
-<li></li>
-<li></li>
-<li></li>
-<li></li>
-  
+<li>job</li>
+<li>departament</li>
+<li>brigadista</li>  
 </ul>
