@@ -1,3 +1,29 @@
 <h1>__GeneradorWeb__</h1>
 
-Por el momento solo se esta usando JAVASCRIPT, no ocupa ninguna libreria y falta revalidar formularios y codigo QR
+<p>Utiliza NodeJs V20 </p>
+
+
+<p>Node Server.Js para ejecutar </p>
+
+
+<p>Usa Mysql Para la base de datos en la cual la base de datos es una tabla que tiene los siguientes atributos: </p>
+<p>Nombre de la tabla> </p>
+<ul>
+<li>name</li>
+<li>first_name</li>
+<li>middle_name</li>
+<li>birthdate</li>
+<li>telephone</li>
+<li>celphone</li>
+<li>email</li>
+<li>address</li>
+<li>alergia</li>
+<li>e_contact</li>
+<li>parents</li>
+<li>e_contact_celphone</li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+  
+</ul>
