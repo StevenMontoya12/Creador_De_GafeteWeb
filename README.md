@@ -8,7 +8,7 @@
 
 <p>Usa Mysql Para la base de datos en la cual la base de datos es una tabla que tiene los siguientes atributos: </p>
 <p>Nombre de la BD:<b> gafetes_db </b> </p>
-<p>Nombre de la tabla:<b>gafetes</b> </p>
+<p>Nombre de la tabla:<b> gafetes </b> </p>
 <ul>
 <li>name</li>
 <li>first_name</li>
