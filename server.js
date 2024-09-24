@@ -40,12 +40,11 @@ const storage = multer.memoryStorage(); // Usamos memoria en lugar de disco
 const upload = multer({ storage: storage });
 
 // Manejar el POST a /save-form
+// Manejar el POST a /save-form
 app.post('/save-form', upload.single('photo'), (req, res) => {
-    console.log('Form Data:', req.body);
-    console.log('File Data:', req.file);
-
     const formData = req.body;
-    const photoPath = req.file ? req.file.originalname : null; // Ajusta esto si usas almacenamiento en disco
+    const photoPath = null; // No se utilizará ninguna foto
+
 
     const sql = `INSERT INTO gafetes 
     (photo, name, first_name, middle_name, birthdate, telephone, celphone, email, address, alergia, e_contact, parents, e_contact_celphone, job, departament, brigadista)
@@ -77,15 +76,15 @@ app.post('/save-form', upload.single('photo'), (req, res) => {
         }
         const id = result.insertId;
 
-        // Generar el código QR con los datos del usuario
-        const qrData = JSON.stringify({ ...formData, id });
-        QRCode.toDataURL(qrData, (err, qrCode) => {
+        // Generar el código QR con la URL de redirección a DatosQR.html
+        const urlToRedirect = "http://localhost:${PORT}/DatosQR.html?id=${id}";
+        QRCode.toDataURL(urlToRedirect, (err, qrCode) => {
             if (err) {
                 console.error('Error al generar el código QR:', err);
                 return res.status(500).send('Error al generar el código QR');
             }
 
-            // Responder con el código QR
+            // Responder con el código QR y el ID
             res.json({ qrCode, id });
         });
     });
@@ -93,8 +92,7 @@ app.post('/save-form', upload.single('photo'), (req, res) => {
 
 
 
-// Ruta para obtener los datos del gafete y el código QR
-app.get('/get-badge/:id', (req, res) => {
+app.get('/datosQR/:id', (req, res) => {
     const id = req.params.id;
     const sql = 'SELECT * FROM gafetes WHERE id = ?';
 
@@ -108,7 +106,7 @@ app.get('/get-badge/:id', (req, res) => {
         }
 
         const formData = results[0];
-        const qrData = JSON.stringify({ ...formData, id });
+        const qrData = JSON.stringify({ id });
 
         QRCode.toDataURL(qrData, (err, qrCode) => {
             if (err) {
@@ -120,6 +118,8 @@ app.get('/get-badge/:id', (req, res) => {
         });
     });
 });
+
+
 
 
 
