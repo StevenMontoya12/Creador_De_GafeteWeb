@@ -2,7 +2,7 @@ const express = require('express');
 const path = require('path');
 const multer = require('multer');
 const mysql = require('mysql2');
-const QRCode = require('qrcode'); // Asegúrate de instalar qrcode con npm install qrcode
+const QRCode = require('qrcode');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -35,23 +35,21 @@ connection.connect((err) => {
     console.log('Conectado a la base de datos MySQL');
 });
 
-// Configura multer para manejar la carga de archivos
-const storage = multer.memoryStorage(); // Usamos memoria en lugar de disco
+// Configura multer para almacenar la imagen en memoria
+const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 // Manejar el POST a /save-form
-// Manejar el POST a /save-form
 app.post('/save-form', upload.single('photo'), (req, res) => {
     const formData = req.body;
-    const photoPath = null; // No se utilizará ninguna foto
-
+    const photoBuffer = req.file ? req.file.buffer : null; // Buffer de la imagen
 
     const sql = `INSERT INTO gafetes 
     (photo, name, first_name, middle_name, birthdate, telephone, celphone, email, address, alergia, e_contact, parents, e_contact_celphone, job, departament, brigadista)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
 
     const values = [
-        photoPath,
+        photoBuffer, // Guardar la imagen en binario
         formData.name,
         formData.first_name,
         formData.middle_name,
@@ -77,7 +75,7 @@ app.post('/save-form', upload.single('photo'), (req, res) => {
         const id = result.insertId;
 
         // Generar el código QR con la URL de redirección a DatosQR.html
-        const urlToRedirect = "http://localhost:${PORT}/DatosQR.html?id=${id}";
+        const urlToRedirect = `http://localhost:${PORT}/DatosQR.html?id=${id}`;
         QRCode.toDataURL(urlToRedirect, (err, qrCode) => {
             if (err) {
                 console.error('Error al generar el código QR:', err);
@@ -90,8 +88,7 @@ app.post('/save-form', upload.single('photo'), (req, res) => {
     });
 });
 
-
-
+// Ruta para obtener los datos del gafete y la imagen desde la base de datos
 app.get('/datosQR/:id', (req, res) => {
     const id = req.params.id;
     const sql = 'SELECT * FROM gafetes WHERE id = ?';
@@ -106,22 +103,24 @@ app.get('/datosQR/:id', (req, res) => {
         }
 
         const formData = results[0];
-        const qrData = JSON.stringify({ id });
+        
+        // Convertir la imagen de binario a base64 para poder mostrarla en el navegador
+        const photoBase64 = formData.photo ? formData.photo.toString('base64') : null;
+        const photoUrl = photoBase64 ? `data:image/jpeg;base64,${photoBase64}` : null;
 
-        QRCode.toDataURL(qrData, (err, qrCode) => {
+        const urlToRedirect = `http://localhost:${PORT}/DatosQR.html?id=${id}`;
+        
+        // Generar el QR con la URL correcta
+        QRCode.toDataURL(urlToRedirect, (err, qrCode) => {
             if (err) {
                 console.error('Error al generar el código QR:', err);
                 return res.status(500).send('Error al generar el código QR');
             }
 
-            res.json({ ...formData, qrCode });
+            res.json({ ...formData, qrCode, photo: photoUrl });
         });
     });
 });
-
-
-
-
 
 // Escuchar en el puerto
 app.listen(PORT, () => {

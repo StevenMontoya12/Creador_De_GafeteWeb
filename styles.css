@@ -132,6 +132,16 @@ form {
 }
 
 
-/* Contenedor del canvas */
+/* Foto que se mostrara en DATOSQR */
 
+#photo {
+    max-width: 150px;
+    border-radius: 75px;
 
+    width: 200px; /* Cambia el tamaño de la imagen */
+    height: 200px; /* Puedes ajustar el alto también */
+    border-radius: 50%; /* Hacer la imagen redonda */
+    border: 5px solid #000; /* Borde negro */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Añadir sombra */
+    object-fit: cover; /* Ajustar la imagen dentro del contenedor */
+}

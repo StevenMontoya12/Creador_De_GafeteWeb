@@ -1,0 +1,25 @@
+body {
+    background-color: #f8f9fa;
+}
+.badge-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    display: none; /* Oculto inicialmente */
+}
+#photo {
+    max-width: 150px;
+    border-radius: 75px;
+    
+
+}
+
+.styled-photo {
+    width: 200px; /* Cambia el tamaño de la imagen */
+    height: 200px; /* Puedes ajustar el alto también */
+    border-radius: 50%; /* Hacer la imagen redonda */
+    border: 5px solid #000; /* Borde negro */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Añadir sombra */
+    object-fit: cover; /* Ajustar la imagen dentro del contenedor */
+}
