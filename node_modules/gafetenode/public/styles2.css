@@ -1,0 +1,48 @@
+body {
+    background-color: #f8f9fa; /* Color de fondo más suave */
+}
+
+.container {
+    max-width: 1000px; /* Ancho máximo del contenedor */
+    margin: 0 auto; /* Centrar el contenedor */
+    padding: 20px; /* Espaciado alrededor del contenedor */
+    border: 1px solid #dee2e6; /* Bordes para resaltar el contenedor */
+    border-radius: 8px; /* Bordes redondeados */
+    background-color: white; /* Fondo blanco */
+}
+
+h1 {
+    color: #007bff; /* Color azul para el encabezado */
+    text-align: center; /* Centrar el encabezado */
+    margin-bottom: 20px; /* Espacio debajo del encabezado */
+}
+
+canvas {
+    border: 1px solid #ccc; /* Borde alrededor del canvas */
+    background-color: #fff; /* Fondo blanco para el canvas */
+    margin-top: 10px; /* Espacio entre el formulario y el canvas */
+}
+
+/* Estilo para las etiquetas y campos del formulario */
+.form-label {
+    font-weight: bold; /* Hacer las etiquetas del formulario en negrita */
+}
+
+/* Estilo para los inputs y el botón */
+input[type="text"] {
+    margin-bottom: 10px; /* Espacio inferior para inputs */
+}
+
+button {
+    width: 100%; /* Botón ocupa todo el ancho */
+    background-color: #007bff; /* Color de fondo del botón */
+    color: white; /* Color del texto del botón */
+    border: none; /* Sin borde */
+    border-radius: 5px; /* Bordes redondeados para el botón */
+    padding: 10px; /* Espaciado dentro del botón */
+}
+
+button:hover {
+    background-color: #0056b3; /* Color al pasar el ratón */
+    cursor: pointer; /* Cambia el cursor al pasar el ratón */
+}
