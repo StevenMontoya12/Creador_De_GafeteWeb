@@ -10,6 +10,8 @@ const PORT = process.env.PORT || 3000;
 // Configura la carpeta 'public' para servir archivos estáticos
 app.use(express.static(path.join(__dirname, 'public')));
 
+
+// Middleware para parsear datos
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
@@ -118,6 +120,109 @@ app.get('/datosQR/:id', (req, res) => {
             }
 
             res.json({ ...formData, qrCode, photo: photoUrl });
+        });
+    });
+});
+
+// Ruta para obtener todos los gafetes y mostrar la tabla
+app.get('/Tabla', (req, res) => {
+    const sql = 'SELECT * FROM gafetes';
+    connection.query(sql, (err, results) => {
+        if (err) {
+            console.error('Error al obtener los datos:', err);
+            return res.status(500).send('Error al obtener los datos');
+        }
+
+        // Generar el HTML de la tabla
+        let tableHTML = `
+            <table class="table table-bordered mt-4" id="clientsTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+        `;
+
+        // Iterar sobre los resultados y agregar filas a la tabla
+        results.forEach(cliente => {
+            tableHTML += `
+                <tr>
+                    <td>${cliente.id}</td>
+                    <td>${cliente.name}</td>
+                    <td>${cliente.first_name}</td>
+                    <td><button onclick="showQRCode(${cliente.id})">Mostrar QR</button></td>
+                </tr>
+            `;
+        });
+
+        tableHTML += `
+                </tbody>
+            </table>
+        `;
+
+        // Devolver la tabla en formato HTML
+        res.send(`
+            <!DOCTYPE html>
+            <html lang="es">
+            <head>
+                <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+                <link rel="stylesheet" href="/Styles.css">
+                <title>Tabla de Gafetes</title>
+                <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script> <!-- Añadir esta línea -->
+            </head>
+            <body>
+                <div class="container">
+                    <h1>Tabla de Gafetes</h1>
+                    ${tableHTML}
+                </div>
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+                <script src="/scriptTabla.js"></script>
+            </body>
+            </html>
+        `);
+    });
+});
+
+
+// Nueva ruta para buscar un gafete por Nombre, Apellido y ID
+app.get('/BuscarGafete', (req, res) => {
+    const { name, lastName, id } = req.query;
+
+    const sql = 'SELECT * FROM gafetes WHERE id = ? AND name = ? AND first_name = ?';
+    connection.query(sql, [id, name, lastName], (err, results) => {
+        if (err) {
+            console.error('Error al consultar la base de datos:', err);
+            return res.status(500).send('Error al buscar el gafete');
+        }
+        if (results.length === 0) {
+            return res.status(404).send('Gafete no encontrado');
+        }
+
+        const formData = results[0];
+
+        const photoBase64 = formData.photo ? formData.photo.toString('base64') : null;
+        const photoUrl = photoBase64 ? `data:image/jpeg;base64,${photoBase64}` : null;
+
+        // Generar el código QR basado en la URL con el ID actual
+        const urlToRedirect = `http://localhost:${PORT}/DatosQR.html?id=${id}`;
+
+        // Generar el QR
+        QRCode.toDataURL(urlToRedirect, (err, qrCode) => {
+            if (err) {
+                console.error('Error al generar el código QR:', err);
+                return res.status(500).send('Error al generar el código QR');
+            }
+
+            // Enviar los datos como JSON para usarlos en el frontend
+            res.json({ name: formData.name, job: formData.job, qrCode, photo: photoUrl, id: formData.id });
         });
     });
 });
